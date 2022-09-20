@@ -1,5 +1,6 @@
 import ButtonLarge from "components/ButtonLarge";
 import ButtonToggle from "components/ButtonToggle";
+import OrderItem from "components/OrderItem";
 import OrderItemList from "components/OrderItemList";
 import * as S from "./style";
 
@@ -21,7 +22,7 @@ const OrderDetails = () => {
   			                <h4>Preço</h4>
                         </S.OrderDetailsListTitle>
                     }
-                    list={"lista de itens"}
+                    list={<OrderItem />}
                     footer={
                         <S.OrderDetailsListFooter>
                             <S.OrderDetailsListFooterRow>
