@@ -4,6 +4,7 @@ import { ReactComponent as Search } from "assets/icons/search.svg";
 import * as S from "./style";
 import { RoutePath } from "types/routes";
 import { navigationItems } from "data/navigation";
+import ProductItemList from "components/ProductItemList";
 
 const Home = () => {
     const dateDescription = DateTime.now().toLocaleString({
@@ -33,7 +34,9 @@ const Home = () => {
                         <b>Pizzas</b>
                     </S.HomeProductTitle>
                     <S.HomeProductList>
-                        <p>Lista de produtos aqui</p>
+                        <ProductItemList>
+                            
+                        <ProductItemList />
                     </S.HomeProductList>
                 </div>
             </S.HomeContent>
