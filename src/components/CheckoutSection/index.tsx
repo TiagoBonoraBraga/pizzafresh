@@ -1,4 +1,9 @@
+import CheckboxIcon from "components/CheckboxIcon";
 import OrderConfirmation from "components/OrderComfirmation";
+
+import { ReactComponent as Card } from "assets/icons/credit-card.svg";
+import { ReactComponent as Cash } from "assets/icons/wallet.svg";
+
 import * as S from "./style";
 
 const CheckoutSection = () => {
@@ -19,8 +24,8 @@ const CheckoutSection = () => {
           </S.CheckoutSectionPaymentFormTitle>
           <S.PaymentForm>
             <S.PaymentFormCheckbox>
-              {"Conponete ChechboxIcon"}
-              {"Conponete ChechboxIcon"}
+              <CheckboxIcon active={true} value="Cartão" icon={<Card />}/>
+              <CheckboxIcon active={false} value="Dinheiro" icon={<Cash />}/>
             </S.PaymentFormCheckbox>
             <>
               <S.PaymentFormGroup>
