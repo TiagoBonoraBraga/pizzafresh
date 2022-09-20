@@ -1,4 +1,6 @@
+import ButtonLarge from "components/ButtonLarge";
 import ButtonToggle from "components/ButtonToggle";
+import OrderItemList from "components/OrderItemList";
 import * as S from "./style";
 
 const OrderDetails = () => {
@@ -11,7 +13,25 @@ const OrderDetails = () => {
                 <ButtonToggle active={true} value="Delivery"/>
             </S.OrderDetailsButtonGroup>
             <S.OrderDetailsList>
-                <p>Itens do Pedido</p>
+                <OrderItemList 
+                    header={
+                        <S.OrderDetailsListTitle>
+                            <h4>Item</h4>
+  			                <h4>Qtd</h4>
+  			                <h4>Preço</h4>
+                        </S.OrderDetailsListTitle>
+                    }
+                    list={"lista de itens"}
+                    footer={
+                        <S.OrderDetailsListFooter>
+                            <S.OrderDetailsListFooterRow>
+                                <span>Subtotal</span>
+                                <span>R$ 10.00</span>
+                            </S.OrderDetailsListFooterRow>
+                            <ButtonLarge value="Continue para o pagamento"/>
+                        </S.OrderDetailsListFooter>
+                    }
+                />
             </S.OrderDetailsList>
         </S.OrderDetails>
     );
