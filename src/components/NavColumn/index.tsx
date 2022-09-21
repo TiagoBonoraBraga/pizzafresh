@@ -3,8 +3,16 @@ import { ReactComponent as Info } from "assets/icons/info.svg";
 import { ReactComponent as Users } from "assets/icons/users.svg";
 import * as S from "./style";
 import { RoutePath } from "types/routes";
+import NavColumnItem from "components/NavColumnItem";
+import { HTMLAttributes } from "react";
 
-const NavColumn = () => {
+type NavColumnType = HTMLAttributes<HTMLDivElement>;
+
+type NavColumnProps = {
+  activeRoute: RoutePath;
+} & NavColumnType;
+
+const NavColumn = ({activeRoute}: NavColumnProps) => {
     const items = [
         {
             icon: <Market />,
@@ -27,7 +35,15 @@ const NavColumn = () => {
     ]
     return (
         <S.NavColumn>
-            {"COmponente NavColumnItem"}
+            {items.map((i, key) => (
+            <NavColumnItem 
+                active={i.navigation === activeRoute} 
+                icon={i.icon}
+                title={i.title}
+                key={key}
+                subtitle={i.subtitle}
+            />
+            ))}
         </S.NavColumn>
     );
 }

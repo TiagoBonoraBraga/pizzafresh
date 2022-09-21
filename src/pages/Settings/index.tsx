@@ -17,7 +17,7 @@ import * as S from "./style";
                 </header>
                 <S.SettingsContent>
                     <S.SettingsContentSidebar>
-                        <NavColumn />
+                        <NavColumn activeRoute={RoutePath.SETTINGS_PRODUCTS}/>
                     </S.SettingsContentSidebar>
                     <S.SettingsContentBox>
                         <S.SettingsContentBoxEmpty>Selecione uma categoria</S.SettingsContentBoxEmpty>
