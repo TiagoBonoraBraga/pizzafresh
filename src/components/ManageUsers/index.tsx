@@ -1,5 +1,5 @@
 import { ReactComponent as Add } from "assets/icons/add.svg";
-import EditProduct from "components/EditProduct";
+import { EditUser } from "components/EditUser/style";
 import { HTMLAttributes } from "react";
 import * as S from "./style";
 
@@ -43,7 +43,7 @@ const ManageUsers = ({...props}: ManageUsersProps ) => {
                          placeholder="Imagem"
                     />
                 </S.ManageUsersContentAdd>
-                {"componente edituser"}
+                <EditUser />
             </S.ManageUsersContent>
             <S.ManageUsersActions>
                 <S.ManageUsersActionsCancel>Cancelar</S.ManageUsersActionsCancel>
