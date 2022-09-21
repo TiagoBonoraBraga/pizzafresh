@@ -1,4 +1,5 @@
 import Menu from "components/Menu";
+import NavColumn from "components/NavColumn";
 import { navigationItems } from "data/navigation";
 import { Outlet } from "react-router-dom";
 import { RoutePath } from "types/routes";
@@ -16,7 +17,7 @@ import * as S from "./style";
                 </header>
                 <S.SettingsContent>
                     <S.SettingsContentSidebar>
-                        {"Componente NavColumn"}
+                        <NavColumn />
                     </S.SettingsContentSidebar>
                     <S.SettingsContentBox>
                         <S.SettingsContentBoxEmpty>Selecione uma categoria</S.SettingsContentBoxEmpty>
