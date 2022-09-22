@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import { products } from "mocks/products";
 import { orders } from "mocks/orders";
 import { ProductResponse } from "types/Product";
+import { OrderType } from "types/OrderType";
+import { useState } from "react";
 
 const Home = () => {
   const dateDescription = DateTime.now().toLocaleString({
@@ -21,6 +23,9 @@ const Home = () => {
   });
 
   const navigate = useNavigate();
+  const [activeOrderType, setActiveOrderType] = useState(
+    OrderType.COMER_NO_LOCAL
+  );
   const handleNavigation = (path: RoutePath) => navigate(path);
   const handleSelection = (product: ProductResponse) => {};
 
@@ -66,7 +71,11 @@ const Home = () => {
         </div>
       </S.HomeContent>
       <aside>
-        <OrderDetails orders={orders} />
+        <OrderDetails 
+        orders={orders}
+        onChangeActiveOrderType={(data)=> setActiveOrderType(data)}
+        activeOrderType={activeOrderType}
+         />
       </aside>
       {/* <Overlay>
                 <CheckoutSection />
