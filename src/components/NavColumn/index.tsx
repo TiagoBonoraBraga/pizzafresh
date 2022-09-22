@@ -18,7 +18,7 @@ const NavColumn = ({activeRoute}: NavColumnProps) => {
             icon: <Market />,
             title: "Customize suas mesas",
             subtitle: "Adicione mesas, configure nomes",
-            navigation: RoutePath.SETTINGS_TABLE,
+            navigation: RoutePath.SETTINGS_TABLES,
         },
         {
             icon: <Info />,
