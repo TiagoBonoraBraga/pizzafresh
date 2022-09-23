@@ -42,6 +42,11 @@ const Home = () => {
     setOrders(list);
   };
 
+  const handleRemoveOrderItem = (id: string) => {
+    const filtered = orders.filter((i) => i.product.id !== id);
+    setOrders(filtered);
+  }
+
   return (
     <S.Home>
       <Menu
@@ -85,6 +90,7 @@ const Home = () => {
       </S.HomeContent>
       <aside>
         <OrderDetails 
+        onRemoveItem={handleRemoveOrderItem}
         orders={orders}
         onChangeActiveOrderType={(data)=> setActiveOrderType(data)}
         activeOrderType={activeOrderType}
