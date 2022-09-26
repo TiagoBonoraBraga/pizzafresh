@@ -7,6 +7,7 @@ import { ReactComponent as Card } from "assets/icons/credit-card.svg";
 import { ReactComponent as Cash } from "assets/icons/wallet.svg";
 import { OrderItemType } from "types/OrderItemType";
 import { OrderType } from "types/OrderType";
+import { PaymentMethod } from "types/PaymentMethod";
 
 import * as S from "./style";
 
@@ -29,6 +30,8 @@ const CheckoutSection = ({
   onCloseSection,
   activeOrderType,
 }: CheckoutSectionProps) => {
+
+  const [activeMethod, setActiveMethod] = useState<PaymentMethod>();
   const [closing, setClosing] = useState<boolean>(false);
 
   const handleCloseSection = () => {
@@ -53,9 +56,19 @@ const CheckoutSection = ({
           </S.CheckoutSectionPaymentFormTitle>
           <S.PaymentForm>
             <S.PaymentFormCheckbox>
-              <CheckboxIcon active={true} value="Cartão" icon={<Card />} />
-              <CheckboxIcon active={false} value="Dinheiro" icon={<Cash />} />
+              <CheckboxIcon 
+                onClick={()=> setActiveMethod(PaymentMethod.CARD)}
+                active={activeMethod === PaymentMethod.CARD}
+                value="Cartão"
+                icon={<Card />} />
+
+              <CheckboxIcon 
+                onClick={()=> setActiveMethod(PaymentMethod.CASH)}
+                active={activeMethod === PaymentMethod.CASH} 
+                value="Dinheiro" 
+                icon={<Cash />} />
             </S.PaymentFormCheckbox>
+            {activeMethod === PaymentMethod.CARD && (
             <>
               <S.PaymentFormGroup>
                 <label htmlFor="titular">Titular do Cartão</label>
@@ -94,6 +107,7 @@ const CheckoutSection = ({
                 </S.PaymentFormHalfItem>
               </S.PaymentFormHalf>
             </>
+            )}
           </S.PaymentForm>
         </S.CheckoutSectionPaymentForm>
         <S.PaymentActions>
