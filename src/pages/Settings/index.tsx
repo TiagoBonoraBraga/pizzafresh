@@ -1,7 +1,8 @@
 import Menu from "components/Menu";
 import NavColumn from "components/NavColumn";
 import { navigationItems } from "data/navigation";
-import { Outlet, useNavigate } from "react-router-dom";
+import path from "path";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { RoutePath } from "types/routes";
 import * as S from "./style";
 
@@ -9,6 +10,10 @@ import * as S from "./style";
 
     const navigate = useNavigate();
     const handleNavigation = (path: RoutePath) => navigate(path);
+    const { pathname } = useLocation();
+    const splitterPath = (path: string) => path.split("/").pop() as RoutePath;
+    const path = splitterPath(pathname);
+
     
     return (
         <S.Settings>
@@ -24,11 +29,14 @@ import * as S from "./style";
                 </header>
                 <S.SettingsContent>
                     <S.SettingsContentSidebar>
-                        <NavColumn activeRoute={RoutePath.SETTINGS_PRODUCTS}/>
+                        <NavColumn activeRoute={path}/>
                     </S.SettingsContentSidebar>
                     <S.SettingsContentBox>
+                        {path === splitterPath(RoutePath.SETTINGS) ? (
                         <S.SettingsContentBoxEmpty>Selecione uma categoria</S.SettingsContentBoxEmpty>
+                        ) : (
                         <Outlet />
+                    )}
                     </S.SettingsContentBox>
                 </S.SettingsContent>
             </S.SettingsPage>
