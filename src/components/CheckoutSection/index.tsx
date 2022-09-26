@@ -13,11 +13,12 @@ type CheckoutSectionType = HTMLAttributes<HTMLDivElement>;
 
 type CheckoutSectionProps ={
   orders: OrderItemType[];
+  selectedTable?: number;
   onOrdersChange: (orders: OrderItemType[]) => void;
   onCloseSection: () => void;
 } & CheckoutSectionType;
 
-const CheckoutSection = ({orders, onOrdersChange, onCloseSection}: CheckoutSectionProps) => {
+const CheckoutSection = ({orders, onOrdersChange, selectedTable, onCloseSection}: CheckoutSectionProps) => {
   
   const [closing, setClosing] = useState<boolean>(false);
 
@@ -102,7 +103,7 @@ const CheckoutSection = ({orders, onOrdersChange, onCloseSection}: CheckoutSecti
                 id="table"
                 placeholder="01"
                 disabled
-                value={""}
+                value={selectedTable}
               />
             </S.PaymentActionsDetailsTableNumber>
           </S.PaymentActionsDetails>
