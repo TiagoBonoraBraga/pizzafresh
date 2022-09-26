@@ -29,23 +29,25 @@ const Home = () => {
   );
   const [orders, setOrders] = useState<OrderItemType[]>([]);
 
+  const [proceedToPayment, setProceedToPayment] = useState<boolean>(false);
+
   const handleNavigation = (path: RoutePath) => navigate(path);
 
   const handleSelection = (product: ProductResponse) => {
     const existing = orders.find((i) => i.product.id === product.id);
     const quantity = existing ? existing.quantity + 1 : 1;
-    const item: OrderItemType = {product, quantity};
+    const item: OrderItemType = { product, quantity };
 
     const list = existing
-    ? orders.map((i) => (i.product.id === existing.product.id ? item : i))
-    : [...orders, item];
+      ? orders.map((i) => (i.product.id === existing.product.id ? item : i))
+      : [...orders, item];
     setOrders(list);
   };
 
   const handleRemoveOrderItem = (id: string) => {
     const filtered = orders.filter((i) => i.product.id !== id);
     setOrders(filtered);
-  }
+  };
 
   return (
     <S.Home>
@@ -89,17 +91,23 @@ const Home = () => {
         </div>
       </S.HomeContent>
       <aside>
-        <OrderDetails 
-        onRemoveItem={handleRemoveOrderItem}
-        orders={orders}
-        onOrdersChange={(data) => setOrders(data)}
-        onChangeActiveOrderType={(data)=> setActiveOrderType(data)}
-        activeOrderType={activeOrderType}
-         />
+        <OrderDetails
+          onRemoveItem={handleRemoveOrderItem}
+          orders={orders}
+          onProceedToPayment={() => setProceedToPayment(true)}
+          onOrdersChange={(data) => setOrders(data)}
+          onChangeActiveOrderType={(data) => setActiveOrderType(data)}
+          activeOrderType={activeOrderType}
+        />
       </aside>
-      {/* <Overlay>
-                <CheckoutSection />
-            </Overlay> */}
+      { proceedToPayment && (
+      <Overlay>
+        <CheckoutSection 
+          orders={orders}
+          onOrdersChange={(data) => setOrders(data)} 
+          onCloseSection={() => setProceedToPayment(false)}/>
+      </Overlay>
+      )}
     </S.Home>
   );
 };
