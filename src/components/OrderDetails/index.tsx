@@ -11,6 +11,7 @@ type OrderDetailsType = HTMLAttributes<HTMLDivElement>;
 
 type OrderDetailsProps = {
   orders: OrderItemType[];
+  onOrdersChange: (orders: OrderItemType[]) => void;
   onChangeActiveOrderType: (data: OrderType) => void;
   activeOrderType: OrderType;
   onRemoveItem: (id: string) => void;
@@ -18,9 +19,11 @@ type OrderDetailsProps = {
 
 const OrderDetails = ({
   orders,
+  onOrdersChange,
   onChangeActiveOrderType,
   onRemoveItem,
-  activeOrderType,
+  activeOrderType
+
 }: OrderDetailsProps) => {
   const price = orders
     .map((i) => i.product.price * i.quantity)
@@ -28,6 +31,14 @@ const OrderDetails = ({
 
   const [priceState, setPriceState] = useState(price);
 
+  const handleChange = (data: OrderItemType) => {
+    const list = orders.map((item) => 
+      item.product.id === data.product.id ? data : item
+    
+  );
+  onOrdersChange(list);
+  }
+  
   useEffect(() => {
     setPriceState(price);
   }, [orders, price]);
@@ -70,6 +81,7 @@ const OrderDetails = ({
                   quantity={item.quantity}
                   observation={item.observation}
                   key={`OrderDetails-${index}`}
+                  onItemChange={handleChange}
                 />
               ))
             ) : (
