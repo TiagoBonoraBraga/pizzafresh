@@ -108,6 +108,8 @@ const Home = () => {
         <CheckoutSection 
           orders={orders}
           onOrdersChange={(data) => setOrders(data)} 
+          onChangeActiveOrderType={(data) => setActiveOrderType(data)}
+          activeOrderType={activeOrderType}
           onCloseSection={() => setProceedToPayment(false)}
           selectedTable={selectedTable}/>
       </Overlay>
