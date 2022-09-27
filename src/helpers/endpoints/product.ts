@@ -1,7 +1,7 @@
 import { endpoint } from "helpers/endpoints";
 
 export const product ={
-    createproduct: () => `${endpoint.baseUrl}/product`,
-    listProduct: () => `${endpoint.baseUrl}/product`,
+    createProducts: () => `${endpoint.baseUrl}/product`,
+    listProducts: () => `${endpoint.baseUrl}/product`,
     productById: (id: string) => `${endpoint.baseUrl}/product/${id}`,
 };
