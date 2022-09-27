@@ -8,6 +8,13 @@ import { ReactComponent as Cash } from "assets/icons/wallet.svg";
 import { OrderItemType } from "types/OrderItemType";
 import { OrderType } from "types/OrderType";
 import { PaymentMethod } from "types/PaymentMethod";
+import { useMutation } from "react-query";
+import { OrderService } from "services/OrderService";
+import { ErrorResponse } from "types/api/error";
+import { LocalStorageHelper } from "helpers/LocalStorageHelper";
+import { UserResponse } from "types/api/user";
+import { LocalStorageKeys } from "types/LocalStorageKeys";
+import { Order } from "types/api/order";
 
 import * as S from "./style";
 
@@ -33,6 +40,30 @@ const CheckoutSection = ({
 
   const [activeMethod, setActiveMethod] = useState<PaymentMethod>();
   const [closing, setClosing] = useState<boolean>(false);
+
+
+  const closeOrder = useMutation(OrderService.create,{
+    onSuccess: (data: {} & ErrorResponse) => {
+      if(data.statusCode){
+        return;
+      }
+      onOrdersChange([]);
+    },
+    onError: () => {
+      console.error('Erro ao fechar pedido!');
+    }
+  });
+
+  const handlePaymentConfirm = () => {
+    const userId = LocalStorageHelper.get<UserResponse>(LocalStorageKeys.USER)?.id || "";
+    const orderRequest: Order = {
+      userId,
+      tableNumber: Number(selectedTable),
+      products: orders,
+    };
+    closeOrder.mutate(orderRequest);
+  }
+
 
   const handleCloseSection = () => {
     setClosing(true);
@@ -145,10 +176,10 @@ const CheckoutSection = ({
           </S.PaymentActionsDetails>
 
           <S.PaymentActionsButtonGroup>
-            <S.PaymentActionsButtonGroupCancel>
+            <S.PaymentActionsButtonGroupCancel onClick={handleCloseSection}>
               Cancelar
             </S.PaymentActionsButtonGroupCancel>
-            <S.PaymentActionsButtonGroupConfirm>
+            <S.PaymentActionsButtonGroupConfirm onClick={handlePaymentConfirm}>
               Confirmar Pagamento
             </S.PaymentActionsButtonGroupConfirm>
           </S.PaymentActionsButtonGroup>
