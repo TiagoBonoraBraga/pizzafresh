@@ -16,6 +16,7 @@ import { ProductResponse } from "types/Product";
 import { OrderType } from "types/OrderType";
 import { useState } from "react";
 import { OrderItemType } from "types/OrderItemType";
+import { Auth } from "helpers/Auth";
 
 const Home = () => {
   const dateDescription = DateTime.now().toLocaleString({
@@ -57,7 +58,7 @@ const Home = () => {
         active={RoutePath.HOME}
         navItems={navigationItems}
         onNavigate={handleNavigation}
-        onLogout={() => navigate(RoutePath.LOGIN)}
+        onLogout={Auth.logout}
       />
       <S.HomeContent>
         <header>
