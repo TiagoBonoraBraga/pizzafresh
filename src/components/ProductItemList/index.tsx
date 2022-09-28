@@ -3,6 +3,7 @@ import * as S from "./style";
 interface ProductItemListProps {
     onSelectTable: (data: number) => void;
     children: React.ReactNode;
+    
 }
 const ProductItemList = ({children, onSelectTable}: ProductItemListProps) => {
     return (

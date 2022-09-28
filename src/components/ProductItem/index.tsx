@@ -1,9 +1,10 @@
-import { ProductResponse } from "types/Product";
+import { ProductResponse } from "types/api/product";
 import * as S from "./style";
 
 type ProductItemProps = {
     product: ProductResponse
     onSelect: (data: ProductResponse) => void
+    
 }
 const ProductItem = ({product, onSelect}: ProductItemProps) => {
     return (
