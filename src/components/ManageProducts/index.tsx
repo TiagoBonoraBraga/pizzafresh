@@ -1,11 +1,13 @@
 import { ReactComponent as Add } from "assets/icons/add.svg";
 import EditProduct from "components/EditProduct";
+import { user } from "helpers/endpoints/user";
 import { HTMLAttributes, useState, useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import { ProductService } from "services/ProductService";
 import { ErrorResponse } from "types/api/error";
 import { Product, ProductResponse } from "types/api/product";
 import { QueryKey } from "types/QueryKey";
+import { toEditorSettings } from "typescript";
 import * as S from "./style";
 
 type ManageProductsType = HTMLAttributes<HTMLDivElement>;
@@ -33,6 +35,33 @@ const ManageProducts = ({ ...props }: ManageProductsProps) => {
       console.error("Erro ao adicionar um produto");
     },
   });
+
+  const update = useMutation(ProductService.updateById, {
+    onSuccess: (data: ProductResponse & ErrorResponse) => {
+      if (data.statusCode) {
+        return;
+      }
+
+      const editedUsers = products.map((i) =>
+        data.id === i.id ? (data as ProductResponse) : i
+      );
+      setProducts(editedUsers);
+    },
+    onError: () => {
+      console.error("Erro ao atualizar o produto");
+    },
+  });
+
+  let productsToEdit: ProductResponse[] = [];
+
+  const onEditProduct = (toEdit: ProductResponse) => {
+    setCancel(false);
+    const existing = productsToEdit.find((user) => user.id === toEdit.id);
+
+    productsToEdit = existing
+      ? productsToEdit.map((i) => (i.id === existing.id ? toEdit : i))
+      : [...productsToEdit, toEdit];
+  };
 
   const form = {
     name: "",
@@ -69,11 +98,15 @@ const ManageProducts = ({ ...props }: ManageProductsProps) => {
     setCancel(true);
     setIsAdding(false);
     setTimeout(() => setCancel(false));
+    productsToEdit = [];
   };
 
   const handleSave = () => {
     const canAdd = productIsValid();
     const productFormatted = productFormatter(productToAdd);
+
+    productsToEdit.forEach((product) => 
+    update.mutate({product, id: product.id}));
 
     if (canAdd) add.mutate(productFormatted);
     setTimeout(() => handleCancel(), 300);
@@ -132,7 +165,7 @@ const ManageProducts = ({ ...props }: ManageProductsProps) => {
           </S.AddCard>
         )}
         {products.map((product, index) => (
-          <EditProduct product={product} key={index} />
+          <EditProduct product={product} key={index} onEdit={onEditProduct} onCancel={cancel}/>
         ))}
       </S.ManageProductsContent>
       <S.ManageProductsActions>
