@@ -52,6 +52,20 @@ const ManageProducts = ({ ...props }: ManageProductsProps) => {
     },
   });
 
+  const remove = useMutation(ProductService.deleteById, {
+    onSuccess: (data: ProductResponse & ErrorResponse) => {
+      if (data.statusCode) {
+        return;
+      }
+
+      const editedProducts = products.filter((i) => data.id !== i.id);
+      setProducts(editedProducts);
+    },
+    onError: () => {
+      console.error("Erro ao remover o protudo");
+    },
+  });
+
   let productsToEdit: ProductResponse[] = [];
 
   const onEditProduct = (toEdit: ProductResponse) => {
@@ -114,6 +128,11 @@ const ManageProducts = ({ ...props }: ManageProductsProps) => {
     setIsAdding(false);
   };
   
+  const handleDelete = (productToDelete: ProductResponse) => {
+    remove.mutate(productToDelete.id);
+    handleCancel();
+  };
+
   useEffect(() => {
     setProducts(productsData || []);
   }, [productsData]);
@@ -165,7 +184,7 @@ const ManageProducts = ({ ...props }: ManageProductsProps) => {
           </S.AddCard>
         )}
         {products.map((product, index) => (
-          <EditProduct product={product} key={index} onEdit={onEditProduct} onCancel={cancel}/>
+          <EditProduct product={product} key={index} onEdit={onEditProduct} onCancel={cancel} onDelete={handleDelete}/>
         ))}
       </S.ManageProductsContent>
       <S.ManageProductsActions>

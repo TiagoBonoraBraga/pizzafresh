@@ -6,9 +6,10 @@ import * as S from "./style";
 interface EditProductProps {
   product: ProductResponse;
   onEdit: (data: ProductResponse) => void;
+  onDelete: (data: ProductResponse) => void;
   onCancel: boolean;
 }
-const EditProduct = ({ product, onEdit, onCancel }: EditProductProps) => {
+const EditProduct = ({ product, onEdit, onCancel, onDelete }: EditProductProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const form = {
@@ -96,7 +97,7 @@ const EditProduct = ({ product, onEdit, onCancel }: EditProductProps) => {
             value={state.image}
             onChange={({ target }) => handleChange("image", target.value)}
           />
-          <S.Delete>Deletar</S.Delete>
+          <S.Delete onClick={() => onDelete(product)}>Deletar</S.Delete>
         </S.EditFormGroup>
       )}
     </S.EditProduct>
