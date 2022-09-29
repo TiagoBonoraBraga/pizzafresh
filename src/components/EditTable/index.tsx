@@ -1,26 +1,57 @@
 import { ReactComponent as Pencil } from "assets/icons/edit.svg";
+import { useEffect, useState } from "react";
+import { TableResponse } from "types/api/table";
 import * as S from "./style";
 
-const EditTable = () => {
+
+interface EditTableProps {
+  table: TableResponse;
+  onCancel: boolean;
+  onDelete: (data: TableResponse) => void;
+  onEdit: (data: TableResponse) => void;
+}
+const EditTable = ({table, onCancel, onDelete, onEdit}: EditTableProps) => {
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    setIsEditing(false);
+  }, [onCancel]);
+
+  const onEditClick = () => {
+    setIsEditing(true);
+    onEdit(table);
+  };
+
+  const onEditChange = (tableId: string) => {
+    setIsEditing(true);
+    onEdit({ ...table, number: Number(tableId) });
+  };
+  
   return (
-    <S.EditTable>
+    <S.EditTable role="listitem">
+      {!isEditing ? (
       <>
         <S.EditTableDetails>
-          <S.EditTableDetailsName>Número da Mesa</S.EditTableDetailsName>
+          <S.EditTableDetailsName>{table.number}</S.EditTableDetailsName>
         </S.EditTableDetails>
-        <S.EditTableAction>
+        <S.EditTableAction onClick={() => onEditClick()}>
           <Pencil />
         </S.EditTableAction>
       </>
+      ) : (
+        <>
             <label htmlFor="tableId">Número da Mesa</label>
             <S.EditForm
                 id="tableId"
                 type="number"
                 placeholder="01"
+                onChange={({ target }) => onEditChange(target.value)}
             />
-            <S.Deletar>Deletar Mesa</S.Deletar>
+            <S.Deletar onClick={() => onDelete(table)}>Deletar Mesa</S.Deletar>
 
-      <></>
+      </>
+      )}
     </S.EditTable>
   );
 };
