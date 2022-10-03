@@ -7,4 +7,5 @@ export interface TableResponse {
     number: number;
     updateAt?: string;
     createdAt?: string;
+    
 }

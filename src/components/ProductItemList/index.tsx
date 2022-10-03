@@ -4,7 +4,7 @@ import * as S from "./style";
 interface ProductItemListProps {
     onSelectTable: (data: number) => void;
     children: React.ReactNode;
-    // tables: TableResponse;
+    
     
     
 }
