@@ -1,14 +1,16 @@
 // import { TableResponse } from "types/api/table";
+import { TableResponse } from "types/api/table";
 import * as S from "./style";
 
 interface ProductItemListProps {
     onSelectTable: (data: number) => void;
     children: React.ReactNode;
+    tables: TableResponse[];
     
     
     
 }
-const ProductItemList = ({children, onSelectTable}: ProductItemListProps) => {
+const ProductItemList = ({children, tables = [],onSelectTable}: ProductItemListProps) => {
     return (
         <section>
             <S.ProductItemListHeader>
