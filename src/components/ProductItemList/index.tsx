@@ -10,7 +10,7 @@ interface ProductItemListProps {
     
     
 }
-const ProductItemList = ({children, tables = [],onSelectTable}: ProductItemListProps) => {
+const ProductItemList = ({children, tables = [], onSelectTable}: ProductItemListProps) => {
     return (
         <section>
             <S.ProductItemListHeader>
