@@ -17,6 +17,10 @@ npm start para rodar o projeto
 
 ### Projeto Pizza Fresh
 
+ --- Usar para fazer Login -----
+ -- User: braga
+ -- Senha: 123456
+
 no arquivo tsconfig.json na linha 3 colocar "baseUrl": "./src", falando q a pasta raiz será a src
 
 installar o styled-components 
